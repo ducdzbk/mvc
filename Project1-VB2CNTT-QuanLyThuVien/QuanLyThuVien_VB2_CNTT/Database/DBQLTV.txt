@@ -1,0 +1,80 @@
+create database QLTV
+--
+go
+use QLTV
+--
+go
+create table docgia(
+	madg int not null,
+	tendg nvarchar(50) not null,
+	sdtdg int not null,
+	emaildg nvarchar(50) not null,
+	diachi nvarchar(50) not null,
+	constraint PK_madg primary key (madg)
+)
+go
+--
+create table thuthu(
+	matt int not null,
+	tentt nvarchar(50) not null,
+	emailtt nvarchar(50) not null,
+	sdttt int not null,
+	diachitt nvarchar(50) not null,
+	constraint PK_matt primary key (matt)
+)
+--
+go
+create table phieumuontrasach(
+	madausach int not null,
+	maphieumuon int not null,
+	madocgia int not null,
+	ngaymuon nvarchar(50) not null,
+	constraint PK_maphieumuon primary key (maphieumuon)
+)
+--
+go
+create table Giaotiep(
+	madg int not null,
+	maphieumuon int not null,
+	matt int not null,
+	masach int not null,
+	constraint PK_giaotiep primary key (madg, masach, maphieumuon, matt)
+)
+--
+go
+create table sach(
+	masach int not null,
+	tensach nvarchar(50) not null,
+	tacgia nvarchar(50) not null,
+	soluong int not null,
+	theloai nvarchar(50) not null,
+	tinhtrang nvarchar(50) not null,
+	constraint PK_masach primary key (masach)
+)
+--
+go
+alter table dbo.Giaotiep
+add constraint FK_matt foreign key (matt) references dbo.thuthu (matt)
+--
+go
+alter table dbo.Giaotiep
+add constraint FK_madg foreign key (madg) references dbo.docgia (madg)
+--
+go
+alter table dbo.Giaotiep
+add constraint FK_masach foreign key (masach) references dbo.sach (masach)
+--
+go
+alter table dbo.Giaotiep
+add constraint FK_maphieumuon foreign key (maphieumuon) references dbo.phieumuontrasach (maphieumuon)
+--
+go
+insert into sach
+(masach, tensach, tacgia, soluong, theloai, tinhtrang)
+values
+('10001', 'Tuyển tập thơ Xuân Quỳnh', 'Xuân Quỳnh', 100, 'Văn học', 'Còn'),
+('10002', 'Tuyển tập đề Toán năm 2020', 'Mạnh Cường', 200, 'Văn học', 'Còn'),
+('10003', 'Số Đỏ', 'Trung Hiếu', 300, 'Văn học', 'Còn'),
+('10004', 'Giải tích 1', 'Mạnh Cường', 400, 'Văn học', 'Còn'),
+('10005', 'Vợ Nhặt', 'Tuấn Linh', 500, 'Văn học', 'Còn');
+--
